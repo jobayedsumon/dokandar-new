@@ -238,10 +238,10 @@ class CustomerAuthController extends Controller
             $response = SMS_module::send($request['phone'], $otp);
             if ($response != 'success') {
                 $errors = [];
-                array_push($errors, [
+                $errors[] = [
                     'code' => 'otp',
                     'message' => translate('messages.faield_to_send_sms')
-                ]);
+                ];
                 return response()->json([
                     'errors' => $errors
                 ], 405);

@@ -26,6 +26,56 @@
         <div class="row g-3">
 
             <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        @php($config=\App\CentralLogics\Helpers::get_business_settings('alpha_sms'))
+                        <form class="sms-module-form" action="{{env('APP_MODE')!='demo'?route('admin.business-settings.sms-module-update',['alpha_sms']):'javascript:'}}"
+                              method="post">
+                            @csrf
+                            <div>
+                                <h5 class="d-flex flex-wrap justify-content-between align-items-center text-uppercase">
+                                    <span>{{translate('Alpha SMS')}}</span>
+                                    <div class="pl-2">
+                                        <img src="{{asset('assets/admin/img/alpha_sms.png')}}" alt="public" width="38px" height="38px">
+                                    </div>
+                                </h5>
+                                <div>
+                                    <span class="badge badge-soft-info mb-1">{{ translate('EX of SMS provider`s template : Your '.env('APP_NAME').' OTP Code is #OTP#') }}</span>
+                                </div>
+                                <div>
+                                    <span class="badge badge-soft-info mb-3">{{ translate('messages.NB : #OTP# will be replace with otp') }}</span>
+                                </div>
+
+                                <div class="d-flex flex-wrap mb-4">
+                                    <label class="form-check form--check mr-2 mr-md-4">
+                                        <input class="form-check-input" type="radio" name="status" value="1" {{isset($config) && $config['status']==1?'checked':''}}>
+                                        <span class="form-check-label text--title pl-2">{{translate('messages.active')}}</span>
+
+                                    </label>
+                                    <label class="form-check form--check">
+                                        <input class="form-check-input" type="radio" name="status" value="0" {{isset($config) && $config['status']==0?'checked':''}}>
+                                        <span class="form-check-label text--title pl-2">{{translate('messages.inactive')}} </span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label text-capitalize"
+                                    >{{translate('messages.api_key')}}</label>
+                                    <input type="text" class="form-control" name="api_key"
+                                           value="{{env('APP_MODE')!='demo'?$config['api_key']??"":''}}">
+                                </div>
+                            </div>
+                            <div class="btn--container justify-content-end">
+                                <button type="{{env('APP_MODE')!='demo'?'submit':'button'}}"
+                                        onclick="{{env('APP_MODE')!='demo'?'':'call_demo()'}}"
+                                        class="btn btn--primary">{{translate('messages.save')}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         @php($config=\App\CentralLogics\Helpers::get_business_settings('twilio_sms'))

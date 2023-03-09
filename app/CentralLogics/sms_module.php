@@ -30,6 +30,12 @@ class SMS_module
             return $response;
         }
 
+        $config = self::get_settings('alpha_sms');
+        if (isset($config) && $config['status'] == 1) {
+            $response = self::alpha_sms($receiver, $otp);
+            return $response;
+        }
+
         $config = self::get_settings('msg91_sms');
         if (isset($config) && $config['status'] == 1) {
             $response = self::msg_91($receiver, $otp);
@@ -153,6 +159,43 @@ class SMS_module
                 'value' => json_encode([
                     'status' => 0,
                     'api_key' => 'aabf4e9c-f55f-11eb-85d5-0200cd936042',
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+        return $response;
+    }
+
+    public static function alpha_sms($receiver, $otp)
+    {
+        $config = self::get_settings('alpha_sms');
+        $response = 'error';
+        if (isset($config) && $config['status'] == 1) {
+            $api_key = $config['api_key'];
+            $msg = 'Your '.env('APP_NAME').' OTP Code is ' . $otp;
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.sms.net.bd/sendsms',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array('api_key' => $api_key,'msg' => $msg,'to' => $receiver),
+            ));
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            curl_close($curl);
+
+            if (!$err) {
+                $response = 'success';
+            } else {
+                $response = 'error';
+            }
+        } elseif (empty($config)) {
+            DB::table('business_settings')->updateOrInsert(['key' => 'alpha_sms'], [
+                'key' => 'alpha_sms',
+                'value' => json_encode([
+                    'status' => 0,
+                    'api_key' => 'mpF1FwAgbkTRd2G7B6gNT9bZsZM5KWogqzHjoX7z',
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),

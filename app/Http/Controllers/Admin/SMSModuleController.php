@@ -57,7 +57,19 @@ class SMSModuleController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-        } elseif ($module == 'msg91_sms') {
+        }
+        elseif($module == 'alpha_sms') {
+            DB::table('business_settings')->updateOrInsert(['key' => 'alpha_sms'], [
+                'key' => 'alpha_sms',
+                'value' => json_encode([
+                    'status' => $request['status'],
+                    'api_key' => $request['api_key'],
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+        elseif ($module == 'msg91_sms') {
             DB::table('business_settings')->updateOrInsert(['key' => 'msg91_sms'], [
                 'key' => 'msg91_sms',
                 'value' => json_encode([
@@ -108,6 +120,18 @@ class SMSModuleController extends Controller
                 $config = Helpers::get_business_settings('2factor_sms');
                 DB::table('business_settings')->updateOrInsert(['key' => '2factor_sms'], [
                     'key' => '2factor_sms',
+                    'value' => json_encode([
+                        'status' => 0,
+                        'api_key' => $config['api_key'],
+                    ]),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+            if ($module != 'alpha_sms') {
+                $config = Helpers::get_business_settings('alpha_sms');
+                DB::table('business_settings')->updateOrInsert(['key' => 'alpha_sms'], [
+                    'key' => 'alpha_sms',
                     'value' => json_encode([
                         'status' => 0,
                         'api_key' => $config['api_key'],
