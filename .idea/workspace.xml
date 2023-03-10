@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="">
+    <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="Alpha SMS">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/AamarpayController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/admin/img/payment/aamarpay.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/CentralLogics/sms_module.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CentralLogics/sms_module.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/SMSModuleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/SMSModuleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/V1/Auth/CustomerAuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/V1/Auth/CustomerAuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/ar/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/messages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/bn/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/bn/messages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/BusinessSettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/BusinessSettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/messages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin-views/business-settings/sms-index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin-views/business-settings/sms-index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin-views/business-settings/payment-index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin-views/business-settings/payment-index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/payment-view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/payment-view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,7 +235,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/jobayedsumon/Downloads/drive-download-20230308T075701Z-001/6amMart v2/Admin new install v2.0/public/assets/admin/img",
+    "last_opened_file_path": "/Users/jobayedsumon/Downloads/drive-download-20230308T075701Z-001/6amMart v2/Admin new install v2.0/public/assets/admin/img/payment",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -242,11 +245,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/assets/admin/img/payment" />
       <recent name="$PROJECT_DIR$/public/assets/admin/img" />
       <recent name="$PROJECT_DIR$/installation" />
       <recent name="$PROJECT_DIR$/installation/backup" />
       <recent name="$PROJECT_DIR$/public/assets/landing/image" />
-      <recent name="$PROJECT_DIR$/routes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/installation/backup" />
@@ -300,8 +303,16 @@
       <workItem from="1630742509256" duration="11000" />
       <workItem from="1630746551123" duration="2315000" />
       <workItem from="1678266350345" duration="158000" />
-      <workItem from="1678376729346" duration="743000" />
+      <workItem from="1678376729346" duration="8732000" />
     </task>
+    <task id="LOCAL-00001" summary="Alpha SMS">
+      <created>1678377496221</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678377496221</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,5 +331,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Alpha SMS" />
+    <option name="LAST_COMMIT_MESSAGE" value="Alpha SMS" />
   </component>
 </project>

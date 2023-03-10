@@ -50,6 +50,18 @@ Route::post('/cancel', 'SslCommerzPaymentController@cancel');
 Route::post('/ipn', 'SslCommerzPaymentController@ipn');
 //SSLCOMMERZ END
 
+//AAMARPAY start
+
+Route::post('/aamarpay-payment','AamarpayController@index')->name('aamarpay-payment');
+
+Route::post('/aamarpay-success','AamarpayController@success')->name('aamarpay-success');
+
+Route::post('/aamarpay-fail','AamarpayController@fail')->name('aamarpay-fail');
+
+Route::get('/aamarpay-cancel','AamarpayController@cancel')->name('aamarpay-cancel');
+
+//AAMARPAY end
+
 /*paypal*/
 /*Route::get('/paypal', function (){return view('paypal-test');})->name('paypal');*/
 Route::post('pay-paypal', 'PaypalPaymentController@payWithpaypal')->name('pay-paypal');
@@ -74,6 +86,7 @@ return redirect('/admin/auth/login');
 
 Route::get('payment-success', 'PaymentController@success')->name('payment-success');
 Route::get('payment-fail', 'PaymentController@fail')->name('payment-fail');
+Route::get('payment-cancel', 'PaymentController@cancel')->name('payment-cancel');
 
 //senang pay
 Route::match(['get', 'post'], '/return-senang-pay', 'SenangPayController@return_senang_pay')->name('return-senang-pay');

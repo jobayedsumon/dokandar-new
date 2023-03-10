@@ -128,6 +128,43 @@
             <!-- End Col -->
             <div class="col-md-6">
                 <div class="card">
+                    @php($config=\App\CentralLogics\Helpers::get_business_settings('aamarpay'))
+                    <div class="card-body p-30px">
+                        <form
+                            action="{{env('APP_MODE')!='demo'?route('admin.business-settings.payment-method-update',['aamarpay']):'javascript:'}}"
+                            method="post">
+                            @csrf
+                            <h5 class="d-flex flex-wrap justify-content-between">
+                                <strong>{{translate('aamarPay')}}</strong>
+                                <label class="switch--custom-label toggle-switch toggle-switch-sm d-inline-flex">
+                                    <span class="mr-2 switch--custom-label-text text-primary on text-uppercase">{{ translate('messages.on') }}</span>
+                                    <span class="mr-2 switch--custom-label-text off text-uppercase">{{ translate('messages.off') }}</span>
+                                    <input type="checkbox" name="status" value="1" class="toggle-switch-input" {{$config?($config['status']==1?'checked':''):''}}>
+                                    <span class="toggle-switch-label text">
+                                    <span class="toggle-switch-indicator"></span>
+                                </span>
+                                </label>
+                            </h5>
+                            <div class="payment--gateway-img">
+                                <img src="{{asset('assets/admin/img/payment/aamarpay.png')}}" alt="public">
+                            </div>
+                            <div class="form-group mb-4">
+                                <input class="form-control" type="text" name="store_id" placeholder="Store ID" value="{{env('APP_MODE')!='demo'?($config?$config['store_id']:''):''}}">
+                            </div>
+                            <div class="form-group mb-4">
+                                <input class="form-control" type="text" name="signature_key" placeholder="Signature Key" value="{{env('APP_MODE')!='demo'?($config?$config['signature_key']:''):''}}">
+                            </div>
+                            <div class="text-right">
+                                <button type="{{env('APP_MODE')!='demo'?'submit':'button'}}"
+                                        onclick="{{env('APP_MODE')!='demo'?'':'call_demo()'}}" class="btn h--37px btn--primary">{{translate('messages.save')}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Col -->
+            <div class="col-md-6">
+                <div class="card">
                     <div class="card-body p-30px">
                         @php($config=\App\CentralLogics\Helpers::get_business_settings('paypal'))
                         <form

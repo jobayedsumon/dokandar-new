@@ -2498,4 +2498,5 @@
   'Food Setup' => 'Food Setup',
   'EX of SMS provider`s template : Your Dokandar OTP Code is #OTP#' => 'EX of SMS provider`s template : Your Dokandar OTP Code is #OTP#',
   'Alpha SMS' => 'Alpha SMS',
+  'aamarPay' => 'AamarPay',
 );

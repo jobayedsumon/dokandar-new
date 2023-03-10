@@ -66,6 +66,23 @@
                         </div>
                     @endif
 
+                    @php($config=\App\CentralLogics\Helpers::get_business_settings('aamarpay'))
+                    @if($config['status'])
+                        <div class="col-md-6 mb-4 cursor-pointer">
+                            <div class="card" onclick="$('#aamarpay-form').submit()">
+                                <div class="card-body pt-2 h--70px">
+                                    <form action="{{ route('aamarpay-payment',request()->getQueryString()) }}" method="POST" class="needs-validation" id="aamarpay-form">
+                                        <input type="hidden" value="{{ csrf_token() }}" name="_token"/>
+                                        <button class="btn btn-block click-if-alone" type="submit">
+                                            <img width="100"
+                                                 src="{{asset('assets/admin/img/payment/aamarpay.png')}}"/>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @php($config=\App\CentralLogics\Helpers::get_business_settings('razor_pay'))
                     @if($config['status'])
                         <div class="col-md-6 mb-4 cursor-pointer">

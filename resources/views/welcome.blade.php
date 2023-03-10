@@ -119,6 +119,44 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body p-20">
+                        <h5 class="text-center">aamarPay</h5>
+                        @php($config=\App\CentralLogics\Helpers::get_business_settings('aamarpay'))
+                        <form
+                            action="{{route('admin.business-settings.payment-method-update',['aamarpay'])}}"
+                            method="post">
+                            @csrf
+                            @if(isset($config))
+                                <div class="form-group mb-2">
+                                    <label class="control-label">aamarPay payment</label>
+                                </div>
+                                <div class="form-group mb-2 mt-2">
+                                    <input type="radio" name="status" value="1" {{$config['status']==1?'checked':''}}>
+                                    <label class="d-block">Active</label>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="radio" name="status" value="0" {{$config['status']==0?'checked':''}}>
+                                    <label
+                                        class="d-block">Inactive</label>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="d-block">Store ID </label>
+                                    <input type="text" class="form-control" name="store_id">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="d-block">Signature Key</label>
+                                    <input type="text" class="form-control" name="signature_key">
+                                </div>
+                                <button type="button" onclick="call_admin()" class="btn btn-primary mb-2">Save</button>
+                            @else
+                                <button type="submit" class="btn btn-primary mb-2">Configure</button>
+                            @endif
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body p-20">
                         <h5 class="text-center">Razor Pay</h5>
                         @php($config=\App\CentralLogics\Helpers::get_business_settings('razor_pay'))
                         <form action="{{route('admin.business-settings.payment-method-update',['razor_pay'])}}"
