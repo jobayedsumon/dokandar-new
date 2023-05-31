@@ -26,17 +26,12 @@ class BkashPaymentController extends Controller
         $bkash_password = $config['password']; // bKash Merchant API PASSWORD
         $bkash_base_url = (env('APP_MODE') == 'live') ? 'https://tokenized.pay.bka.sh/v1.2.0-beta' : 'https://tokenized.sandbox.bka.sh/v1.2.0-beta';
 
-        // $this->app_key = $bkash_app_key;
-        // $this->app_secret = $bkash_app_secret;
-        // $this->username = $bkash_username;
-        // $this->password = $bkash_password;
-        // $this->base_url = $bkash_base_url;
+         $this->app_key = $bkash_app_key ?? '4f6o0cjiki2rfm34kfdadl1eqq';
+         $this->app_secret = $bkash_app_secret ?? '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b';
+         $this->username = $bkash_username ?? 'sandboxTokenizedUser02';
+         $this->password = $bkash_password ?? 'sandboxTokenizedUser02@12345';
+         $this->base_url = $bkash_base_url;
 
-        $this->app_key = '4f6o0cjiki2rfm34kfdadl1eqq';
-        $this->app_secret = '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b';
-        $this->username = 'sandboxTokenizedUser02';
-        $this->password = 'sandboxTokenizedUser02@12345';
-        $this->base_url = $bkash_base_url;
     }
 
     public function getToken()
@@ -47,7 +42,7 @@ class BkashPaymentController extends Controller
             'app_key' => $this->app_key,
             'app_secret' => $this->app_secret
         );
-        $url = curl_init('https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant');
+        $url = curl_init($this->base_url . '/tokenized/checkout/token/grant');
         $request_data_json = json_encode($request_data);
         $header = array(
             'Content-Type:application/json',
@@ -111,7 +106,6 @@ class BkashPaymentController extends Controller
         curl_setopt($url, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         $resultdata = curl_exec($url);
         curl_close($url);
-        //echo $resultdata;
 
         $obj = json_decode($resultdata);
         return redirect()->away($obj->{'bkashURL'});
