@@ -363,8 +363,17 @@ class CustomerController extends Controller
             $user->addresses()->save($new_address);
         }
 
-        return response()->json([
-            'addresses' => $user->addresses,
-        ]);
+        $limit = $request['limit']??10;
+        $offset = $request['offset']??1;
+
+        $addresses = CustomerAddress::where('user_id', $request->user()->id)->latest()->paginate($limit, ['*'], 'page', $offset);
+
+        $data =  [
+            'total_size' => $addresses->total(),
+            'limit' => $limit,
+            'offset' => $offset,
+            'addresses' => Helpers::address_data_formatting($addresses->items())
+        ];
+        return response()->json($data, 200);
     }
 }
