@@ -60,7 +60,7 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'order_amount' => 'required',
             'payment_method' => 'required|in:cash_on_delivery,digital_payment,wallet',
-            'order_type' => 'required|in:take_away,delivery,parcel',
+            'order_type' => 'required|in:take_away,delivery,parcel|send_gift',
             'store_id' => 'required_unless:order_type,parcel',
             'distance' => 'required_unless:order_type,take_away',
             'address' => 'required_unless:order_type,take_away',
@@ -273,7 +273,7 @@ class OrderController extends Controller
                             $product->tax = $store->tax;
                             $product = Helpers::product_data_formatting($product, false, false, app()->getLocale());
                             $addon_data = Helpers::calculate_addon_price(\App\Models\AddOn::whereIn('id',$c['add_on_ids'])->get(), $c['add_on_qtys']);
-        
+
                             $or_d = [
                                 'item_id' => null,
                                 'item_campaign_id' => $c['item_campaign_id'],
@@ -311,14 +311,14 @@ class OrderController extends Controller
                                         ]
                                     ], 406);
                                 }
-    
+
                                 $product_data[] = [
                                     'item' => clone $product,
                                     'quantity' => $c['quantity'],
                                     'variant' => count($c['variation']) > 0 ? $c['variation'][0]['type'] : null
                                 ];
                             }
-    
+
                             $product->tax = $store->tax;
                             $product = Helpers::product_data_formatting($product, false, false, app()->getLocale());
                             $addon_data = Helpers::calculate_addon_price(\App\Models\AddOn::whereIn('id', $c['add_on_ids'])->get(), $c['add_on_qtys']);
@@ -467,16 +467,16 @@ class OrderController extends Controller
 
             $tax = ($store->tax > 0)?$store->tax:0;
             $order->tax_status = 'excluded';
-    
+
             $tax_included =BusinessSetting::where(['key'=>'tax_included'])->first() ?  BusinessSetting::where(['key'=>'tax_included'])->first()->value : 0;
             if ($tax_included ==  1){
                 $order->tax_status = 'included';
             }
-    
+
             $total_tax_amount=Helpers::product_tax($total_price,$tax,$order->tax_status =='included');
-    
+
             $tax_a=$order->tax_status =='included'?0:$total_tax_amount;
-            
+
             if ($store->minimum_order > $product_price + $total_addon_price) {
                 return response()->json([
                     'errors' => [
@@ -697,7 +697,7 @@ class OrderController extends Controller
                 $delivery_charge = !isset($delivery_charge) ? $original_delivery_charge : $delivery_charge;
             }
         }
-        
+
 
         $zone = null;
         if ($request->latitude && $request->longitude) {
