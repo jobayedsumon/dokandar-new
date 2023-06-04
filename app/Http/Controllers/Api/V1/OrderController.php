@@ -60,7 +60,7 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'order_amount' => 'required',
             'payment_method' => 'required|in:cash_on_delivery,digital_payment,wallet',
-            'order_type' => 'required|in:take_away,delivery,parcel|send_gift',
+            'order_type' => 'required|in:take_away,delivery,parcel,send_gift',
             'store_id' => 'required_unless:order_type,parcel',
             'distance' => 'required_unless:order_type,take_away',
             'address' => 'required_unless:order_type,take_away',
