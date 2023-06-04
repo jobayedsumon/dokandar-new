@@ -150,6 +150,8 @@
                                 <th class="border-0">{{__('messages.customer')}}</th>
                                 <th class="border-0">{{__('messages.credit')}}</th>
                                 <th class="border-0">{{__('messages.debit')}}</th>
+                                <th class="border-0">{{__('Admin Bonus')}}</th>
+                                <th class="border-0">{{__('Admin Bonus Status')}}</th>
                                 <th class="border-0">{{__('messages.balance')}}</th>
                                 <th class="border-0">{{__('messages.transaction_type')}}</th>
                                 <th class="border-0">{{__('messages.reference')}}</th>
@@ -165,7 +167,14 @@
                                 <td><a href="{{route('admin.users.customer.view',['user_id'=>$wt->user_id])}}">{{Str::limit($wt->user?$wt->user->f_name.' '.$wt->user->l_name:__('messages.not_found'),20,'...')}}</a></td>
                                 <td>{{$wt->credit}}</td>
                                 <td>{{$wt->debit}}</td>
-                                <td>{{$wt->balance}}</td>
+                                <td>{{$wt->admin_bonus}}</td>
+                                <td>
+                                    <label class="switch">
+                                        <input class="adminBonusStatusToggle" data-id="{{ $wt->id }}" type="checkbox" {{ $wt->admin_bonus_status == 'approved' ? 'checked': '' }}>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                                <td class="walletBalance">{{$wt->balance}}</td>
                                 <td>
                                     <span class="badge badge-soft-{{$wt->transaction_type=='order_refund'
                                         ?'danger'

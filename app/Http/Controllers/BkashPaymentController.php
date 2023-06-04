@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\V1\WalletController;
 use Illuminate\Http\Request;
 use App\CentralLogics\Helpers;
 use App\Models\Order;
@@ -19,18 +20,20 @@ class BkashPaymentController extends Controller
     public function __construct()
     {
         $config=\App\CentralLogics\Helpers::get_business_settings('bkash');
-        // You can import it from your Database
-        $bkash_app_key = $config['api_key']; // bKash Merchant API APP KEY
-        $bkash_app_secret = $config['api_secret']; // bKash Merchant API APP SECRET
-        $bkash_username = $config['username']; // bKash Merchant API USERNAME
-        $bkash_password = $config['password']; // bKash Merchant API PASSWORD
-        $bkash_base_url = (env('APP_MODE') == 'live') ? 'https://tokenized.pay.bka.sh/v1.2.0-beta' : 'https://tokenized.sandbox.bka.sh/v1.2.0-beta';
 
-         $this->app_key = $bkash_app_key ?? '4f6o0cjiki2rfm34kfdadl1eqq';
-         $this->app_secret = $bkash_app_secret ?? '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b';
-         $this->username = $bkash_username ?? 'sandboxTokenizedUser02';
-         $this->password = $bkash_password ?? 'sandboxTokenizedUser02@12345';
-         $this->base_url = $bkash_base_url;
+        if((env('APP_MODE') == 'live') && $config) {
+            $this->app_key = $config['api_key']; // bKash Merchant API APP KEY
+            $this->app_secret = $config['api_secret']; // bKash Merchant API APP SECRET
+            $this->username = $config['username']; // bKash Merchant API USERNAME
+            $this->password = $config['password']; // bKash Merchant API PASSWORD
+            $this->base_url = 'https://tokenized.pay.bka.sh/v1.2.0-beta';
+        } else {
+            $this->app_key = '4f6o0cjiki2rfm34kfdadl1eqq';
+            $this->app_secret = '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b';
+            $this->username = 'sandboxTokenizedUser02';
+            $this->password = 'sandboxTokenizedUser02@12345';
+            $this->base_url = 'https://tokenized.sandbox.bka.sh/v1.2.0-beta';
+        }
 
     }
 
@@ -72,21 +75,28 @@ class BkashPaymentController extends Controller
 
     public function make_tokenize_payment(Request $request)
     {
-        $order = Order::with(['details','customer'])->where(['id' => $request->order_id])->first();
         $user_data = User::find($request->customer_id);
         $response = self::getToken();
         $auth = $response['id_token'];
         session()->put('token', $auth);
-        $callbackURL = route('bkash-callback', ['order_id' => $request->order_id, 'token' => $auth]);
+
+        if ($request->has('walletPayment') && $request->walletPayment == 'true') {
+            $amount = $request->amount;
+            $callbackURL = route('bkash-callback', ['customer_id' => $request->customer_id, 'amount' => $amount, 'token' => $auth]);
+        } else {
+            $order = Order::with(['details','customer'])->where(['id' => $request->order_id])->first();
+            $amount = $order->order_amount;
+            $callbackURL = route('bkash-callback', ['order_id' => $request->order_id, 'token' => $auth]);
+        }
 
         $requestbody = array(
             'mode' => '0011',
-            'amount' => (string)$order->order_amount,
+            'amount' => (string)$amount,
             'currency' => 'BDT',
             'intent' => 'sale',
             'payerReference' => $user_data->phone,
             'merchantInvoiceNumber' => 'invoice_' . Str::random('15'),
-            'callbackURL' => $callbackURL
+            'callbackURL' => $callbackURL,
         );
 
         $url = curl_init($this->base_url . '/tokenized/checkout/create');
@@ -139,13 +149,31 @@ class BkashPaymentController extends Controller
         curl_close($url);
         $obj = json_decode($resultdata);
 
+        if($request->has('customer_id') && $request->has('amount')) {
+            if ($obj->statusCode == '0000') {
+
+                $result = WalletController::add_fund($request->input('customer_id'), $request->input('amount'), $obj->trxID);
+
+                if ($result) {
+                    return \redirect()->route('payment-success');
+                } else {
+                    return \redirect()->route('payment-fail');
+                }
+
+            } else {
+
+                return \redirect()->route('payment-fail');
+            }
+        }
+
+
         $order = Order::find($request['order_id']);
-        $order->payment_method = 'bkash';
-        $order->order_status = 'confirmed';
-        $order->payment_status = 'paid';
-        $order->transaction_reference = $obj->trxID ?? null;
 
         if ($obj->statusCode == '0000') {
+            $order->payment_method = 'bkash';
+            $order->order_status = 'confirmed';
+            $order->payment_status = 'paid';
+            $order->transaction_reference = $obj->trxID ?? null;
             $order->save();
             if ($order->callback != null) {
                 return redirect($order->callback . '&status=success');

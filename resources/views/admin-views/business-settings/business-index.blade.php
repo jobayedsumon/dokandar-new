@@ -873,6 +873,15 @@
                                             min="0" max="100" step="0.01" value="{{ $delivery_charge_comission ? $delivery_charge_comission->value: 0 }}">
                                     </div>
                                 </div>
+                                <div class="col-sm-6 col-md-4 col-xl-3">
+                                    @php($wallet_add_fund_bonus = \App\Models\BusinessSetting::where('key', 'wallet_add_fund_bonus')->first())
+                                    <div class="form-group mb-0">
+                                        <label class="input-label text-capitalize d-flex alig-items-center"
+                                               for="admin_wallet_add_fund_bonus">{{translate('Wallet Add Fund Bonus By Admin (%)')}}</label>
+                                        <input type="number" name="admin_wallet_add_fund_bonus" class="form-control" id="admin_wallet_add_fund_bonus"
+                                               min="0" max="100" step="0.01" value="{{ $wallet_add_fund_bonus ? $wallet_add_fund_bonus->value: 0 }}">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

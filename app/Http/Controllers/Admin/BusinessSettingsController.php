@@ -241,6 +241,10 @@ class BusinessSettingsController extends Controller
             'value' => $request['admin_comission_in_delivery_charge']
         ]);
 
+        DB::table('business_settings')->updateOrInsert(['key' => 'wallet_add_fund_bonus'], [
+            'value' => $request['admin_wallet_add_fund_bonus']
+        ]);
+
         DB::table('business_settings')->updateOrInsert(['key' => 'opening_time'], [
             'value' => $request['opening_time']
         ]);

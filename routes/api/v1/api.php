@@ -240,6 +240,7 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
 
             Route::group(['prefix'=>'wallet'], function() {
                 Route::get('transactions', 'WalletController@transactions');
+                Route::post('fund-transfer', 'WalletController@fund_transfer');
             });
 
         });

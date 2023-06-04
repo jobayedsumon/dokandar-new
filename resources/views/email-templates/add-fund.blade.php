@@ -100,7 +100,8 @@
     $note_message = [
       'add_fund_by_admin'=>translate('messages.Rewared by company admin',['company_name'=>ucwords($company_name)]),
       'loyalty_point' => translate('messages.loyalty_point_to_wallet'),
-      'referrer'=> translate('messages.earned_from_referrer')
+      'referrer'=> translate('messages.earned_from_referrer'),
+        'fund_transfer'=> "Fund transferred successfully from your wallet.",
     ];
   ?>
   <div style="height: 100px;background-color: #ececec; width:100%"></div>
@@ -114,7 +115,12 @@
 
       <div class="congrats-box">
           <span style="font-weight: 700;font-size: 22px;line-height: 135.5%; display:block; margin-bottom:10px;">{{__('messages.Transaction Sucessfull')}}</span>
-          <span style="font-weight: 400;font-size: 16px;line-height: 135.5%; color:#727272; margin-bottom:7px; display:block;">{{__('messages.amount sucessfully credited to your wallet',['amount'=>$data->credit.' '.\App\CentralLogics\Helpers::currency_code()])}}</span>
+          @if($data->transaction_type == 'fund_transfer')
+                <span style="font-weight: 400;font-size: 16px;line-height: 135.5%; color:#727272; margin-bottom:7px; display:block;">{{__('messages.amount sucessfully transferred from your wallet',['amount'=>$data->debit.' '.\App\CentralLogics\Helpers::currency_code()])}}</span>
+          @else
+              <span style="font-weight: 400;font-size: 16px;line-height: 135.5%; color:#727272; margin-bottom:7px; display:block;">{{__('messages.amount sucessfully credited to your wallet',['amount'=>$data->credit.' '.\App\CentralLogics\Helpers::currency_code()])}}</span>
+          @endif
+
           <span style="font-weight: 400;font-size: 14px;line-height: 135.5%;color: #182E4B;display:block; margin-bottom:10px;"><span style="font-weight: 700;font-size: 14px;line-height: 18.79px;color: #182E4B;color: #EF7822;">{{__('messages.note')}}: </span>{{in_array($data->transaction_type,$note_message)?$note_message[$data->transaction_type]:translate('messages.add_fund_to_wallet')}} </span>
           <span style="font-weight: 700;font-size: 14px;line-height: 135.5%;color: #182E4B; display:block; margin-bottom: 5px;">{{__('messages.dear')}} {{$data->user->f_name.' '.$data->user->l_name}}</span>
           <span style="font-weight: 400;font-size: 12px;line-height: 135.5%;text-align: center;color: #182E4B;display:block; margin-bottom:34px;">{{__('messages.Thank you for joinning with')}} <span style="color: #EF7822;">{{$company_name}}!</span></span>

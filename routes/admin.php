@@ -504,6 +504,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
                 Route::get('add-fund', 'CustomerWalletController@add_fund_view')->name('add-fund');
                 Route::post('add-fund', 'CustomerWalletController@add_fund');
                 Route::get('report', 'CustomerWalletController@report')->name('report');
+                Route::post('admin-bonus-status', 'CustomerWalletController@admin_bonus_status');
             });
 
             Route::group(['middleware' => ['module:customerList']], function () {

@@ -246,6 +246,36 @@ function HSDemo() {
   document.getElementById("headerDouble").parentNode.removeChild(document.getElementById("headerDouble"));
   document.getElementById("sidebarMain").parentNode.removeChild(document.getElementById("sidebarMain"));
   document.getElementById("sidebarCompact").parentNode.removeChild(document.getElementById("sidebarCompact"));
+
+
+
+  $(document).on('change', '.adminBonusStatusToggle', function(e) {
+
+      var status = $(this).prop('checked');
+      var id = $(this).data('id');
+      var node = $(this);
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/admin/customer/wallet/admin-bonus-status',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                admin_bonus_status: status == true ? 'approved' : 'pending',
+                wallet_transaction_id: id
+            },
+            success: function(data){
+                toastr.success(data.message, 'Success!');
+                $(node).closest('td').next('td').text(data.balance);
+            },
+            error: function(data){
+                toastr.error('Something went wrong!', 'Error!');
+                $(node).prop('checked', !status);
+            },
+        });
+  });
+
+
 }
 
 HSDemo();

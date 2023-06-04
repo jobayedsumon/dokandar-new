@@ -113,7 +113,6 @@
 <!-- ========== END MAIN CONTENT ========== -->
 
 <!-- ========== END SECONDARY CONTENTS ========== -->
-<script src="{{asset('assets/admin')}}/js/custom.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase.js"></script>
 <!-- JS Implementing Plugins -->
 
@@ -124,6 +123,7 @@
 <script src="{{asset('assets/admin')}}/js/sweet_alert.js"></script>
 <script src="{{asset('assets/admin')}}/js/bootstrap-tour-standalone.min.js"></script>
 <script src="{{asset('assets/admin')}}/js/toastr.js"></script>
+    <script src="{{asset('assets/admin')}}/js/custom.js"></script>
 {!! Toastr::message() !!}
 
 @if ($errors->any())
@@ -668,5 +668,7 @@
 <script>
     if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="{{asset('assets/admin')}}/vendor/babel-polyfill/polyfill.min.js"><\/script>');
 </script>
+
+
 </body>
 </html>

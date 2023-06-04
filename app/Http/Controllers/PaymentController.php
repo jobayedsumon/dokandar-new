@@ -10,6 +10,25 @@ class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
+        if ($request->has('walletPayment') && $request->walletPayment == 'true') {
+
+            session()->put('walletPayment', true);
+            session()->put('customer_id', $request['customer_id']);
+            $customer = User::find($request['customer_id']);
+
+            if (isset($customer)) {
+                $data = [
+                    'name' => $customer['f_name'],
+                    'email' => $customer['email'],
+                    'phone' => $customer['phone'],
+                ];
+                session()->put('data', $data);
+                return view('payment-view');
+            }
+
+            return response()->json(['errors' => ['code' => 'order-payment', 'message' => 'Data not found']], 403);
+        }
+
         if ($request->has('callback')) {
             Order::where(['id' => $request->order_id])->update(['callback' => $request['callback']]);
         }
@@ -36,6 +55,11 @@ class PaymentController extends Controller
 
     public function success()
     {
+        if (session('walletPayment')) {
+            session()->forget('walletPayment');
+            return response()->json(['message' => 'Payment succeeded'], 200);
+        }
+
         $order = Order::where(['id' => session('order_id'), 'user_id'=>session('customer_id')])->first();
         if (isset($order) && $order->callback != null) {
             return redirect($order->callback . '&status=success');
@@ -45,6 +69,11 @@ class PaymentController extends Controller
 
     public function fail()
     {
+        if (session('walletPayment')) {
+            session()->forget('walletPayment');
+            return response()->json(['message' => 'Payment failed'], 403);
+        }
+
         $order = Order::where(['id' => session('order_id'), 'user_id'=>session('customer_id')])->first();
         if (isset($order) && $order->callback != null) {
             return redirect($order->callback . '&status=fail');
@@ -54,6 +83,11 @@ class PaymentController extends Controller
 
     public function cancel()
     {
+        if (session('walletPayment')) {
+            session()->forget('walletPayment');
+            return response()->json(['message' => 'Payment canceled'], 403);
+        }
+
         $order = Order::where(['id' => session('order_id'), 'user_id'=>session('customer_id')])->first();
         if (isset($order) && $order->callback != null) {
             return redirect($order->callback . '&status=cancel');

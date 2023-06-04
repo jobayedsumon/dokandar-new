@@ -27,23 +27,25 @@ class CustomerLogic
         $debit = 0.0;
         $credit = 0.0;
 
-        if (in_array($transaction_type, ['add_fund_by_admin', 'add_fund', 'order_refund', 'loyalty_point', 'referrer'])) {
+        if (in_array($transaction_type, ['add_fund_by_admin', 'add_fund', 'order_refund', 'loyalty_point', 'referrer', 'add_fund_by_transfer'])) {
             $credit = $amount;
             if ($transaction_type == 'add_fund') {
-                $wallet_transaction->admin_bonus = $amount * BusinessSetting::where('key', 'wallet_add_fund_bonus')->first()->value / 100;
+                if (BusinessSetting::where('key', 'wallet_add_fund_bonus')->first()) {
+                    $wallet_transaction->admin_bonus = $amount * BusinessSetting::where('key', 'wallet_add_fund_bonus')->first()->value / 100;
+                }
             } else if ($transaction_type == 'loyalty_point') {
 
                 $check_loyalty_point_exchange_rate = (int) BusinessSetting::where('key', 'loyalty_point_exchange_rate')->first()->value;
 
                 if($check_loyalty_point_exchange_rate == 0){
-                    
+
                     $credit = (int)($amount / 1);
                 }
                 else{
                     $credit = (int)($amount / BusinessSetting::where('key', 'loyalty_point_exchange_rate')->first()->value);
                 }
             }
-        } else if ($transaction_type == 'order_place') {
+        } else if (in_array($transaction_type, ['order_place', 'fund_transfer'])) {
             $debit = $amount;
         }
 
@@ -59,7 +61,7 @@ class CustomerLogic
             $user->save();
             $wallet_transaction->save();
             DB::commit();
-            if (in_array($transaction_type, ['loyalty_point', 'order_place', 'add_fund_by_admin', 'referrer'])) return $wallet_transaction;
+            if (in_array($transaction_type, ['loyalty_point', 'order_place', 'add_fund_by_admin', 'referrer', 'add_fund', 'fund_transfer'])) return $wallet_transaction;
             return true;
         } catch (\Exception $ex) {
             info($ex);
