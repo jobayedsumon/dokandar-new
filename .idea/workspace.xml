@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="gift address update">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/V1/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/V1/CustomerController.php" afterDir="false" />
     </list>
@@ -303,7 +302,7 @@
       <workItem from="1685654947287" duration="3386000" />
       <workItem from="1685736037038" duration="28005000" />
       <workItem from="1685889071623" duration="1077000" />
-      <workItem from="1685917758240" duration="3439000" />
+      <workItem from="1685917758240" duration="3512000" />
     </task>
     <task id="LOCAL-00001" summary="Alpha SMS">
       <created>1678377496221</created>
@@ -347,7 +346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685920435917</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="gift address update">
+      <created>1685921905694</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1685921905694</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

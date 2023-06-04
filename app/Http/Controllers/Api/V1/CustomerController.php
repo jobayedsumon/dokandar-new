@@ -366,7 +366,7 @@ class CustomerController extends Controller
         $limit = $request['limit']??10;
         $offset = $request['offset']??1;
 
-        $addresses = CustomerAddress::where('user_id', $request->user()->id)->latest()->paginate($limit, ['*'], 'page', $offset);
+        $addresses = $user->addresses()->latest()->paginate($limit, ['*'], 'page', $offset);
 
         $data =  [
             'total_size' => $addresses->total(),
