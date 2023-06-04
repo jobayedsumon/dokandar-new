@@ -179,7 +179,7 @@ class CustomerController extends Controller
     $user = User::findOrFail($request->user()->id);
     $user->current_language_key = $current_language;
     $user->save();
-    
+
         $data = $request->user();
         $data['userinfo'] = $data->userinfo;
         $data['order_count'] =(integer)$request->user()->orders->count();
@@ -336,5 +336,35 @@ class CustomerController extends Controller
         }
         $user->delete();
         return response()->json([]);
+    }
+
+    public function update_gift_address(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|exists:users,phone',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $user = $request->user();
+        $phone = $request->phone;
+
+        $gift_user = User::where('phone', $phone)->first();
+        $gift_user_addresses = $gift_user->addresses;
+
+        $user->addresses()->where('type', 'gift')->delete();
+
+        foreach ($gift_user_addresses as $address) {
+            $new_address = $address->replicate();
+            $new_address->type = 'gift';
+            $user->addresses()->save($new_address);
+        }
+
+        return response()->json([
+            'addresses' => $user->addresses,
+        ]);
     }
 }

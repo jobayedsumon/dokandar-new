@@ -202,6 +202,7 @@ Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function (
                 Route::post('add', 'CustomerController@add_new_address');
                 Route::put('update/{id}', 'CustomerController@update_address');
                 Route::delete('delete', 'CustomerController@delete_address');
+                Route::post('update-gift-address', 'CustomerController@update_gift_address');
             });
 
             Route::group(['prefix' => 'order'], function () {
