@@ -12,7 +12,7 @@ use App\Models\LoyaltyPointTransaction;
 class CustomerLogic
 {
 
-    public static function create_wallet_transaction($user_id, float $amount, $transaction_type, $referance)
+    public static function create_wallet_transaction($user_id, float $amount, $transaction_type, $reference)
     {
         if (BusinessSetting::where('key', 'wallet_status')->first()->value != 1) return false;
         $user = User::find($user_id);
@@ -21,7 +21,7 @@ class CustomerLogic
         $wallet_transaction = new WalletTransaction();
         $wallet_transaction->user_id = $user->id;
         $wallet_transaction->transaction_id = Str::uuid();
-        $wallet_transaction->reference = $referance;
+        $wallet_transaction->reference = $reference;
         $wallet_transaction->transaction_type = $transaction_type;
 
         $debit = 0.0;

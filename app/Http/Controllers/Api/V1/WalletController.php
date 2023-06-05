@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerWalletController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\WalletTransaction;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -83,8 +84,8 @@ class WalletController extends Controller
         $from_user = $request->user();
         $to_user = User::where('phone', $request->phone)->first();
 
-        $from_reference = $from_user->f_name.' '.$from_user->l_name . '('.$from_user->phone.')';
-        $to_reference = $to_user->f_name.' '.$to_user->l_name . '('.$to_user->phone.')';
+        $from_reference = $from_user->f_name.' '.$from_user->l_name . ' ('.$from_user->phone.')';
+        $to_reference = $to_user->f_name.' '.$to_user->l_name . ' ('.$to_user->phone.')';
 
         $wallet_transaction_from = CustomerLogic::create_wallet_transaction($from_user->id, $request->amount, 'fund_transfer',$to_reference);
         $wallet_transaction_to = CustomerLogic::create_wallet_transaction($to_user->id, $request->amount, 'add_fund_by_transfer',$from_reference);
@@ -92,6 +93,25 @@ class WalletController extends Controller
         if($wallet_transaction_from && $wallet_transaction_to)
         {
             try{
+
+                if (isset($to_user->cm_firebase_token)) {
+                    $data = [
+                        'title' => 'Fund Transfer',
+                        'description' => 'You have received '.$request->amount.' ৳ from '.$from_user->f_name.' '.$from_user->l_name . ' ('.$from_user->phone.')',
+                        'order_id' => '',
+                        'image' => '',
+                        'type' => 'wallet_transaction',
+                    ];
+                    Helpers::send_push_notif_to_device($to_user->cm_firebase_token, $data);
+
+                    DB::table('user_notifications')->insert([
+                        'data' => json_encode($data),
+                        'user_id' => $to_user->id,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }
+
                 if(config('mail.status')) {
                     Mail::to($wallet_transaction_from->user->email)->send(new \App\Mail\AddFundToWallet($wallet_transaction_from));
                     Mail::to($wallet_transaction_to->user->email)->send(new \App\Mail\AddFundToWallet($wallet_transaction_to));
