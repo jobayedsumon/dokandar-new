@@ -80,14 +80,14 @@ class WalletController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)]);
         }
 
-        $from_user = $request->user()->id;
-        $to_user = User::where('phone', $request->phone)->first()->id;
+        $from_user = $request->user();
+        $to_user = User::where('phone', $request->phone)->first();
 
         $from_reference = $from_user->f_name.' '.$from_user->l_name . '('.$from_user->phone.')';
         $to_reference = $to_user->f_name.' '.$to_user->l_name . '('.$to_user->phone.')';
 
-        $wallet_transaction_from = CustomerLogic::create_wallet_transaction($from_user, $request->amount, 'fund_transfer',$to_reference);
-        $wallet_transaction_to = CustomerLogic::create_wallet_transaction($to_user, $request->amount, 'add_fund_by_transfer',$from_reference);
+        $wallet_transaction_from = CustomerLogic::create_wallet_transaction($from_user->id, $request->amount, 'fund_transfer',$to_reference);
+        $wallet_transaction_to = CustomerLogic::create_wallet_transaction($to_user->id, $request->amount, 'add_fund_by_transfer',$from_reference);
 
         if($wallet_transaction_from && $wallet_transaction_to)
         {
