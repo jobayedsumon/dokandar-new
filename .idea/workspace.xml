@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="cors error fix for web app">
-      <change beforePath="$PROJECT_DIR$/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -302,7 +303,7 @@
       <workItem from="1685736037038" duration="28005000" />
       <workItem from="1685889071623" duration="1077000" />
       <workItem from="1685917758240" duration="9337000" />
-      <workItem from="1686573049083" duration="3432000" />
+      <workItem from="1686573049083" duration="3587000" />
     </task>
     <task id="LOCAL-00001" summary="Alpha SMS">
       <created>1678377496221</created>
@@ -479,7 +480,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686577951528</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="cors error fix for web app">
+      <created>1686578003960</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1686578003960</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
