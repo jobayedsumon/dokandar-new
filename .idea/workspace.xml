@@ -302,7 +302,7 @@
       <workItem from="1685736037038" duration="28005000" />
       <workItem from="1685889071623" duration="1077000" />
       <workItem from="1685917758240" duration="9337000" />
-      <workItem from="1686573049083" duration="2258000" />
+      <workItem from="1686573049083" duration="2544000" />
     </task>
     <task id="LOCAL-00001" summary="Alpha SMS">
       <created>1678377496221</created>
@@ -402,7 +402,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686576729052</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="cors error fix for web app">
+      <created>1686576830771</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1686576830771</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://dokandar.xyz");
 
 Route::group(['namespace' => 'Api\V1', 'middleware'=>'localization'], function () {
     Route::get('zone/list', 'ZoneController@get_zones');
