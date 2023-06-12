@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="fcm added for transfer">
+    <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="show send gift orders in list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/messages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api/v1/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/v1/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +303,7 @@
       <workItem from="1685736037038" duration="28005000" />
       <workItem from="1685889071623" duration="1077000" />
       <workItem from="1685917758240" duration="9337000" />
-      <workItem from="1686573049083" duration="903000" />
+      <workItem from="1686573049083" duration="1920000" />
     </task>
     <task id="LOCAL-00001" summary="Alpha SMS">
       <created>1678377496221</created>
@@ -384,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685969419900</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="show send gift orders in list">
+      <created>1686574275208</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1686574275208</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,6 +415,7 @@
     <MESSAGE value="gift address update" />
     <MESSAGE value="wallet transfer reference update" />
     <MESSAGE value="fcm added for transfer" />
-    <option name="LAST_COMMIT_MESSAGE" value="fcm added for transfer" />
+    <MESSAGE value="show send gift orders in list" />
+    <option name="LAST_COMMIT_MESSAGE" value="show send gift orders in list" />
   </component>
 </project>
