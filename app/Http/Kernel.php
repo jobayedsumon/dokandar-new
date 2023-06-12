@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ActivationCheckMiddleware;
+use App\Http\Middleware\Cors;
 use App\Http\Middleware\InstallationMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -23,6 +24,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        Cors::class,
     ];
 
     /**
@@ -75,5 +77,6 @@ class Kernel extends HttpKernel
         'localization' => \App\Http\Middleware\LocalizationMiddleware::class,
         'module-check' => \App\Http\Middleware\ModuleCheckMiddleware::class,
         'current-module' => \App\Http\Middleware\CurrentModule::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

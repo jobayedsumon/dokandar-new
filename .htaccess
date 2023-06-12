@@ -20,7 +20,7 @@
     RewriteRule ^ index.php [L]
 
     # cors
-    Header always set Access-Control-Allow-Origin "https://dokandar.xyz"
+    Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
 # Hide a specific file
