@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-header("Access-Control-Allow-Origin: *");
-
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('terms-and-conditions', 'HomeController@terms_and_conditions')->name('terms-and-conditions');
 Route::get('about-us', 'HomeController@about_us')->name('about-us');
