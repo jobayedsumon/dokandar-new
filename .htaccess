@@ -20,7 +20,7 @@
     RewriteRule ^ index.php [L]
 
     # cors
-    Header set Access-Control-Allow-Origin "*"
+#    Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
 # Hide a specific file
