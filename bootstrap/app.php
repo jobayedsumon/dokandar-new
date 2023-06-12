@@ -11,7 +11,7 @@ ini_set('memory_limit',-1);
 |
 */
 
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: https://dokandar.xyz');
 header('Access-Control-Allow-Methods: GET, POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
 
