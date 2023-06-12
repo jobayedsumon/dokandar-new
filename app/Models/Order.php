@@ -30,7 +30,7 @@ class Order extends Model
         'original_delivery_charge'=>'float',
         'receiver_details'=>'array',
         'dm_tips'=>'float',
-        'distance'=>'float', 
+        'distance'=>'float',
         'prescription_order' => 'boolean'
     ];
 
@@ -202,14 +202,14 @@ class Order extends Model
     public function scopeStoreOrder($query)
     {
         return $query->where(function($q){
-            $q->where('order_type', 'take_away')->orWhere('order_type', 'delivery');
+            $q->where('order_type', 'take_away')->orWhere('order_type', 'delivery')->orWhere('order_type', 'send_gift');
         });
     }
 
     public function scopeDmOrder($query)
     {
         return $query->where(function($q){
-            $q->where('order_type', 'parcel')->orWhere('order_type', 'delivery');
+            $q->where('order_type', 'parcel')->orWhere('order_type', 'delivery')->orWhere('order_type', 'send_gift');
         });
     }
 

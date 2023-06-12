@@ -2510,4 +2510,5 @@
   'fund_transfer' => 'Fund transfer',
   'Wallet Add Fund Bonus By Admin' => 'Wallet Add Fund Bonus By Admin',
   'Wallet Add Fund Bonus By Admin (%)' => 'Wallet Add Fund Bonus By Admin (%)',
+  'send gift' => 'Send gift',
 );
