@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8de7019d-e2bb-4d1b-9272-623980507709" name="Default Changelist" comment="cors error fix for web app">
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/admin/img/.Theme-2.png.icloud" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/admin/img/.instructions.gif.icloud" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/admin/vendor/icon-set/fonts/.The-Icon-of9a76.svg.icloud" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BkashPaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BkashPaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/installation/backup/public.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/installation/public.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/admin/img/Theme-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/admin/img/instructions.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/admin/vendor/icon-set/fonts/The-Icon-of9a76.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin-views/order/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin-views/order/list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,7 +314,9 @@
       <workItem from="1685736037038" duration="28005000" />
       <workItem from="1685889071623" duration="1077000" />
       <workItem from="1685917758240" duration="9337000" />
-      <workItem from="1686573049083" duration="6009000" />
+      <workItem from="1686573049083" duration="6612000" />
+      <workItem from="1687003432028" duration="638000" />
+      <workItem from="1688290141037" duration="1526000" />
     </task>
     <task id="LOCAL-00001" summary="Alpha SMS">
       <created>1678377496221</created>
@@ -579,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686580441777</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="cors error fix for web app">
+      <created>1686580584797</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1686580584797</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

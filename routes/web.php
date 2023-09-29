@@ -118,7 +118,7 @@ Route::get('mercadopago/get-user', 'MercadoPagoController@get_test_user')->name(
 Route::any('/paytabs-payment', 'PaytabsController@payment')->name('paytabs-payment');
 Route::any('/paytabs-response', 'PaytabsController@callback_response')->name('paytabs-response');
 
-//bkash
+//b
 Route::group(['prefix' => 'bkash'], function () {
     // Payment Routes for bKash
     Route::post('get-token', 'BkashPaymentController@getToken')->name('bkash-get-token');

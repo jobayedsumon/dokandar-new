@@ -33,6 +33,12 @@ class BkashPaymentController extends Controller
             $this->username = 'sandboxTokenizedUser02';
             $this->password = 'sandboxTokenizedUser02@12345';
             $this->base_url = 'https://tokenized.sandbox.bka.sh/v1.2.0-beta';
+
+//            $this->app_key = '5nej5keguopj928ekcj3dne8p';
+//            $this->app_secret = '1honf6u1c56mqcivtc9ffl960slp4v2756jle5925nbooa46ch62';
+//            $this->username = 'testdemo';
+//            $this->password = 'test%#de23@msdao';
+//            $this->base_url = 'https://tokenized.sandbox.bka.sh/v1.2.0-beta';
         }
 
     }
@@ -45,6 +51,7 @@ class BkashPaymentController extends Controller
             'app_key' => $this->app_key,
             'app_secret' => $this->app_secret
         );
+
         $url = curl_init($this->base_url . '/tokenized/checkout/token/grant');
         $request_data_json = json_encode($request_data);
         $header = array(
