@@ -30,7 +30,7 @@
                     <li class="nav-item __nav-item">
                         <a href="{{ route('admin.transactions.store.withdraw_list')}}" id="tourb-7" class="__nav-link {{ Request::is('admin/transactions*') ? 'active' : '' }}">
                             <img src="{{asset('assets/admin/img/new-img/transaction-and-report.svg')}}" alt="public/img">
-                            <span>{{ translate('Transactions & Reports')}}</span>
+                            <span>{{ translate('Transactions')}}</span>
                         </a>
                     </li>
 
@@ -102,7 +102,14 @@
                     <li class="nav-item __nav-item">
                         <a href="{{ route('admin.dispatch.dashboard')}}" id="tourb-8" class="__nav-link {{ Request::is('admin/dispatch*') ? 'active' : '' }}">
                             <img src="{{asset('assets/admin/img/new-img/dispatch.svg')}}" alt="public/img">
-                            <span>{{ translate('Dispatch Management')}}</span>
+                            <span>{{ translate('Dispatch')}}</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item __nav-item">
+                        <a href="{{ route('admin.investment.dashboard')}}" id="tourb-8" class="__nav-link {{ Request::is('admin/investment*') ? 'active' : '' }}">
+                            <img src="{{asset('assets/admin/img/new-img/transaction-and-report.svg')}}" alt="public/img">
+                            <span>{{ translate('Investment')}}</span>
                         </a>
                     </li>
 

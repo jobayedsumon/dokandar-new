@@ -55,7 +55,7 @@ class DashboardController extends Controller
             return $q->where('zone_id', $params['zone_id']);
         })
         ->Zonewise()->where('application_status','approved')->where('active',0)->count();
-        
+
         $newly_joined_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
             return $q->where('zone_id', $params['zone_id']);
         })
@@ -183,7 +183,7 @@ class DashboardController extends Controller
             return $q->where('zone_id', $params['zone_id']);
         })
         ->Zonewise()->where('active',1)->Available()->count();
-        
+
         $newly_joined_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
             return $q->where('zone_id', $params['zone_id']);
         })
@@ -626,7 +626,7 @@ class DashboardController extends Controller
         $top_deliveryman = DeliveryMan::withCount('orders')->when(is_numeric($params['zone_id']), function ($q) use ($params) {
                 return $q->where('zone_id', $params['zone_id']);
             })
-            ->Zonewise()    
+            ->Zonewise()
             ->orderBy("orders_count", 'desc')
             ->take(6)
             ->get();
@@ -861,5 +861,65 @@ class DashboardController extends Controller
         $dash_data['delivery_commission'] = $delivery_commission;
         $dash_data['label'] = $label;
         return $dash_data;
+    }
+
+    public function investment_dashboard(Request $request)
+    {
+        $params = [
+            'zone_id' => $request['zone_id'] ?? 'all',
+            'module_id' => Config::get('module.current_module_id'),
+            'statistics_type' => $request['statistics_type'] ?? 'overall',
+            'user_overview' => $request['user_overview'] ?? 'overall',
+            'commission_overview' => $request['commission_overview'] ?? 'this_year',
+            'business_overview' => $request['business_overview'] ?? 'overall',
+        ];
+
+        session()->put('dash_params', $params);
+        $data = self::dashboard_data($request);
+        $total_sell = $data['total_sell'];
+        $commission = $data['commission'];
+        $delivery_commission = $data['delivery_commission'];
+        $label = $data['label'];
+        $customers = User::zone($params['zone_id'])->take(2)->get();
+
+        $delivery_man = DeliveryMan::with('last_location')->when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })
+            ->Zonewise()
+            ->limit(2)->get('image');
+
+        $active_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })
+            ->Zonewise()->where('active',1)->count();
+
+        $inactive_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })
+            ->Zonewise()->where('application_status','approved')->where('active',0)->count();
+
+        $unavailable_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })
+            ->Zonewise()->where('active',1)->Unavailable()->count();
+
+        $available_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })
+            ->Zonewise()->where('active',1)->Available()->count();
+
+        $newly_joined_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })
+            ->Zonewise()->whereDate('created_at', '>=', now()->subDays(30)->format('Y-m-d'))->count();
+
+        $deliveryMen = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
+            return $q->where('zone_id', $params['zone_id']);
+        })->zonewise()->available()->active()->get();
+
+        $deliveryMen = Helpers::deliverymen_list_formatting($deliveryMen);
+
+        $module_type = 'investment';
+        return view("admin-views.dashboard-{$module_type}", compact('data','active_deliveryman','deliveryMen','unavailable_deliveryman','available_deliveryman','inactive_deliveryman','newly_joined_deliveryman','delivery_man', 'total_sell', 'commission', 'delivery_commission','label', 'params','module_type'));
     }
 }
