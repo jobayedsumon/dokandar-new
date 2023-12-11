@@ -96,7 +96,7 @@ class InvestmentController extends Controller
         $package->status                = $request->status;
         $package->save();
 
-        return redirect()->route('admin.investment.flexible_packages')->with('success', 'Package created successfully!');
+        return redirect()->route('admin.investment.flexible')->with('success', 'Package created successfully!');
     }
 
     public function flexible_package_edit($id)
@@ -123,14 +123,14 @@ class InvestmentController extends Controller
         $package->status                = $request->status;
         $package->save();
 
-        return redirect()->route('admin.investment.flexible_packages')->with('success', 'Package updated successfully!');
+        return redirect()->route('admin.investment.flexible')->with('success', 'Package updated successfully!');
     }
 
     public function flexible_package_delete($id)
     {
         $package = InvestmentPackage::find($id);
         $package->delete();
-        return redirect()->route('admin.investment.flexible_packages')->with('success', 'Package deleted successfully!');
+        return redirect()->route('admin.investment.flexible')->with('success', 'Package deleted successfully!');
     }
 
     public function locked_in_packages()
@@ -165,7 +165,7 @@ class InvestmentController extends Controller
         $package->status                = $request->status;
         $package->save();
 
-        return redirect()->route('admin.investment.locked_in_packages')->with('success', 'Package created successfully!');
+        return redirect()->route('admin.investment.locked-in')->with('success', 'Package created successfully!');
     }
 
     public function locked_in_package_edit($id)
@@ -194,13 +194,13 @@ class InvestmentController extends Controller
         $package->status                = $request->status;
         $package->save();
 
-        return redirect()->route('admin.investment.locked_in_packages')->with('success', 'Package updated successfully!');
+        return redirect()->route('admin.investment.locked-in')->with('success', 'Package updated successfully!');
     }
 
     public function locked_in_package_delete($id)
     {
         $package = InvestmentPackage::find($id);
         $package->delete();
-        return redirect()->route('admin.investment.locked_in_packages')->with('success', 'Package deleted successfully!');
+        return redirect()->route('admin.investment.locked-in')->with('success', 'Package deleted successfully!');
     }
 }

@@ -2527,4 +2527,8 @@
   'Amount' => 'Amount',
   'package' => 'Package',
   'monthly_interest_rate' => 'Monthly interest rate',
+  'Want to delete this package ?' => 'Want to delete this package  ',
+  'Duration In Months' => 'Duration In Months',
+  'locked-in' => 'Locked-in',
+  'duration_in_months' => 'Duration in months',
 );

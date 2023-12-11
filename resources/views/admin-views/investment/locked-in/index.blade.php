@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',translate('messages.flexible'))
+@section('title',translate('messages.locked_in'))
 
 @push('css_or_js')
 
@@ -17,9 +17,9 @@
                     <div class="card-header py-2 border-0">
                         <div class="search--button-wrapper">
                             <h5 class="card-title">
-                                {{translate('messages.flexible')}} {{translate('messages.packages')}}<span class="badge badge-soft-dark ml-2" id="itemCount">{{count($packages)}}</span>
+                                {{translate('messages.locked_in')}} {{translate('messages.packages')}}<span class="badge badge-soft-dark ml-2" id="itemCount">{{count($packages)}}</span>
                             </h5>
-                            <a href="{{route('admin.investment.flexible.create')}}" class="btn btn-sm btn-primary px-3" title="{{translate('messages.add')}} {{translate('messages.package')}}"><i class="tio-add-circle"></i>
+                            <a href="{{route('admin.investment.locked-in.create')}}" class="btn btn-sm btn-primary px-3" title="{{translate('messages.add')}} {{translate('messages.package')}}"><i class="tio-add-circle"></i>
                                 {{translate('messages.add')}} {{translate('messages.package')}}
                             </a>
                             <!-- Unfold -->
@@ -41,6 +41,7 @@
                                 <th class="border-0">{{translate('messages.name')}}</th>
                                 <th class="border-0">{{translate('messages.Amount')}}</th>
                                 <th class="border-0">{{translate('messages.Monthly Interest Rate')}}</th>
+                                <th class="border-0">{{translate('messages.Duration In Months')}}</th>
                                 <th class="border-0">{{translate('messages.Status')}}</th>
                                 <th class="border-0">{{translate('messages.Actions')}}</th>
                             </tr>
@@ -72,17 +73,22 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-center">
+                                            {{$package->duration_in_months}}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="text-center">
                                             {{$package->status ? 'Active' : 'Inactive'}}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <div class="btn--container justify-content-center">
-                                            <a class="btn action-btn btn--primary btn-outline-primary" href="{{route('admin.investment.flexible.edit',[$package->id])}}" title="{{translate('messages.edit')}}"><i class="tio-edit"></i>
+                                            <a class="btn action-btn btn--primary btn-outline-primary" href="{{route('admin.investment.locked-in.edit',[$package->id])}}" title="{{translate('messages.edit')}}"><i class="tio-edit"></i>
                                             </a>
-                                            <a class="btn action-btn btn--danger btn-outline-danger" href="javascript:" onclick="form_alert('flexible-{{$package->id}}','{{ translate('Want to delete this package ?') }}')" title="{{translate('messages.delete')}}"><i class="tio-delete-outlined"></i>
+                                            <a class="btn action-btn btn--danger btn-outline-danger" href="javascript:" onclick="form_alert('locked-in-{{$package->id}}','{{ translate('Want to delete this package ?') }}')" title="{{translate('messages.delete')}}"><i class="tio-delete-outlined"></i>
                                             </a>
-                                            <form action="{{route('admin.investment.flexible.delete',[$package->id])}}"
-                                                  method="post" id="flexible-{{$package->id}}">
+                                            <form action="{{route('admin.investment.locked-in.delete',[$package->id])}}"
+                                                  method="post" id="locked-in-{{$package->id}}">
                                                 @csrf @method('delete')
                                             </form>
                                         </div>

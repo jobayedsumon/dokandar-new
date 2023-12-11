@@ -629,14 +629,14 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
                 Route::post('flexible/store', 'InvestmentController@flexible_package_store')->name('flexible.store');
                 Route::get('flexible/edit/{id}', 'InvestmentController@flexible_package_edit')->name('flexible.edit');
                 Route::post('flexible/update/{id}', 'InvestmentController@flexible_package_update')->name('flexible.update');
-                Route::post('flexible/delete/{id}', 'InvestmentController@flexible_package_delete')->name('flexible.delete');
+                Route::delete('flexible/delete/{id}', 'InvestmentController@flexible_package_delete')->name('flexible.delete');
 
                 Route::get('locked-in', 'InvestmentController@locked_in_packages')->name('locked-in');
                 Route::get('locked-in/create', 'InvestmentController@locked_in_package_create')->name('locked-in.create');
                 Route::post('locked-in/store', 'InvestmentController@locked_in_package_store')->name('locked-in.store');
                 Route::get('locked-in/edit/{id}', 'InvestmentController@locked_in_package_edit')->name('locked-in.edit');
                 Route::post('locked-in/update/{id}', 'InvestmentController@locked_in_package_update')->name('locked-in.update');
-                Route::post('locked-in/delete/{id}', 'InvestmentController@locked_in_package_delete')->name('locked-in.delete');
+                Route::delete('locked-in/delete/{id}', 'InvestmentController@locked_in_package_delete')->name('locked-in.delete');
             });
         });
 

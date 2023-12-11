@@ -58,7 +58,7 @@
                 <!-- dispatch -->
                 @if (\App\CentralLogics\Helpers::module_permission_check('order'))
                     <!-- Order dispachment -->
-                    <li class="navbar-vertical-aside-has-menu {{ Request::is("admin/investment*") ? 'active' : '' }}">
+                    <li class="navbar-vertical-aside-has-menu {{ Request::is("admin/investment/*") ? 'active' : '' }}">
                         <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="Investment Packages">
                             <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
                                 Packages

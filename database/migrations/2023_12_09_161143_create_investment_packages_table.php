@@ -20,7 +20,7 @@ class CreateInvestmentPackagesTable extends Migration
             $table->integer('amount');
             $table->float('monthly_interest_rate');
             $table->integer('duration_in_months')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
