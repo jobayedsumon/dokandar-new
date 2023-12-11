@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',translate('messages.locked_in'))
+@section('title',translate('messages.customer_investments'))
 
 @push('css_or_js')
 
@@ -17,11 +17,8 @@
                     <div class="card-header py-2 border-0">
                         <div class="search--button-wrapper">
                             <h5 class="card-title">
-                                {{translate('messages.locked_in')}} {{translate('messages.packages')}}<span class="badge badge-soft-dark ml-2" id="itemCount">{{count($packages)}}</span>
+                                {{translate('messages.Investment')}} {{translate('messages.withdrawals_requests')}}<span class="badge badge-soft-dark ml-2" id="itemCount">{{count($withdrawals)}}</span>
                             </h5>
-                            <a href="{{route('admin.investment.locked-in.create')}}" class="btn btn-sm btn-primary px-3" title="{{translate('messages.add')}} {{translate('messages.package')}}"><i class="tio-add-circle"></i>
-                                {{translate('messages.add')}} {{translate('messages.package')}}
-                            </a>
                             <!-- Unfold -->
                             <!-- End Unfold -->
                         </div>
@@ -38,18 +35,18 @@
                             <thead class="thead-light">
                             <tr class="text-center">
                                 <th class="border-0">{{translate('SL')}}</th>
-                                <th class="border-0">{{translate('messages.name')}}</th>
-                                <th class="border-0">{{translate('messages.Amount')}}</th>
-                                <th class="border-0">{{translate('messages.Monthly Interest Rate')}}</th>
-                                <th class="border-0">{{translate('messages.Duration In Months')}}</th>
-                                <th class="border-0">{{translate('messages.Status')}}</th>
-                                <th class="border-0">{{translate('messages.Actions')}}</th>
+                                <th class="border-0">{{translate('messages.Customer Name')}}</th>
+                                <th class="border-0">{{translate('messages.Withdrawal Amount')}}</th>
+                                <th class="border-0">{{translate('messages.Withdrawal Method')}}</th>
+                                <th class="border-0">{{translate('messages.Requested On')}}</th>
+                                <th class="border-0">{{translate('messages.Paid On')}}</th>
+                                <th class="border-0">{{translate('messages.Action')}}</th>
                             </tr>
 
                             </thead>
 
                             <tbody id="set-rows">
-                            @forelse($packages as $package)
+                            @forelse($withdrawals as $withdrawal)
                                 <tr>
                                     <td class="text-center">
                                         <span class="mr-3">
@@ -58,53 +55,73 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-body mr-3">
-                                            {{Str::limit($package->name,50,'...')}}
+                                            {{Str::limit($withdrawal->customer->f_name.' '.$withdrawal->customer->l_name, 50, '...')}}
+                                            <br>
+                                            {{ $withdrawal->customer->phone }}
                                         </span>
                                     </td>
                                     <td class="text-center">
+                                        <span class="mr-3 {{ $withdrawal->customer->investment_wallet->balance < $withdrawal->withdrawal_amount && !$withdrawal->paid_at ? 'text-danger' : '' }}">
+                                            {{\App\CentralLogics\Helpers::format_currency($withdrawal->withdrawal_amount)}}
+                                        </span>
+                                    </td>
+                                    <td class="text-left">
                                         <span class="text-body mr-3">
-                                            {{\App\CentralLogics\Helpers::format_currency($package->amount)}}
+                                            Method Type: <span class="text-capitalize">{{ $withdrawal->method_details->method_type }}</span>
+                                            <br>
+                                            @if($withdrawal->method_details->method_type === 'bank')
+                                                Bank Name: {{ $withdrawal->method_details->bank_name }}
+                                                <br>
+                                                Account Number: {{ $withdrawal->method_details->account_number }}
+                                                <br>
+                                                Account Name: {{ $withdrawal->method_details->account_name }}
+                                                <br>
+                                                Branch Name: {{ $withdrawal->method_details->branch_name }}
+                                                <br>
+                                                Routing Number: {{ $withdrawal->method_details->routing_number }}
+                                            @else
+                                                Mobile Number: {{ $withdrawal->method_details->mobile_number }}
+                                            @endif
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-center">
-                                            {{$package->monthly_interest_rate}}%
+                                            {{$withdrawal->created_at->format('d M, Y')}}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-center">
-                                            {{$package->duration_in_months}}
+                                            {{$withdrawal->paid_at ? \Carbon\Carbon::parse($withdrawal->paid_at)->format('d M, Y') : 'Pending'}}
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="text-center">
-                                            {{$package->status ? 'Active' : 'Inactive'}}
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="btn--container justify-content-center">
-                                            <a class="btn action-btn btn--primary btn-outline-primary" href="{{route('admin.investment.locked-in.edit',[$package->id])}}" title="{{translate('messages.edit')}}"><i class="tio-edit"></i>
+                                        @if($withdrawal->paid_at)
+                                            <span>Paid</span>
+                                        @elseif($withdrawal->customer->investment_wallet->balance < $withdrawal->withdrawal_amount)
+                                            <span class="text-danger">Insufficient Balance</span>
+                                        @else
+                                            <a class="btn btn-success btn-outline-success" href="javascript:" onclick="form_alert('withdrawal-{{$withdrawal->id}}','{{ translate('Want to pay this request ?') }}')" title="{{translate('messages.Mark As Paid')}}">
+                                                <i class="tio-checkmark-circle"></i>
+                                                <span>Pay</span>
                                             </a>
-                                            <a class="btn action-btn btn--danger btn-outline-danger" href="javascript:" onclick="form_alert('locked-in-{{$package->id}}','{{ translate('Want to delete this package ?') }}')" title="{{translate('messages.delete')}}"><i class="tio-delete-outlined"></i>
-                                            </a>
-                                            <form action="{{route('admin.investment.locked-in.delete',[$package->id])}}"
-                                                  method="post" id="locked-in-{{$package->id}}">
-                                                @csrf @method('delete')
+                                            <form action="{{route('admin.investment.withdrawal-pay',[$withdrawal->id])}}"
+                                                  method="post" id="withdrawal-{{$withdrawal->id}}">
+                                                @csrf
                                             </form>
-                                        </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
                             @endforelse
                             </tbody>
                         </table>
-                        @if(count($packages) !== 0)
+                        @if(count($withdrawals) !== 0)
                             <hr>
                         @endif
                         <div class="page-area">
-                            {!! $packages->links() !!}
+                            {!! $withdrawals->links() !!}
                         </div>
-                        @if(count($packages) === 0)
+                        @if(count($withdrawals) === 0)
                             <div class="empty--data">
                                 <img src="{{asset('assets/admin/svg/illustrations/sorry.svg')}}" alt="public">
                                 <h5>

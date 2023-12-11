@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\CustomerInvestment;
 use App\Models\DeliveryMan;
 use App\Models\InvestmentPackage;
+use App\Models\InvestmentWithdrawal;
 use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -69,7 +72,7 @@ class InvestmentController extends Controller
     public function flexible_packages()
     {
         $module_type = 'investment';
-        $packages = InvestmentPackage::where('type', 'flexible')->get();
+        $packages = InvestmentPackage::where('type', 'flexible')->paginate();
         return view('admin-views.investment.flexible.index', compact('module_type', 'packages'));
     }
 
@@ -136,7 +139,7 @@ class InvestmentController extends Controller
     public function locked_in_packages()
     {
         $module_type = 'investment';
-        $packages = InvestmentPackage::where('type', 'locked-in')->get();
+        $packages = InvestmentPackage::where('type', 'locked-in')->paginate(1);
         return view('admin-views.investment.locked-in.index', compact('module_type', 'packages'));
     }
 
@@ -202,5 +205,35 @@ class InvestmentController extends Controller
         $package = InvestmentPackage::find($id);
         $package->delete();
         return redirect()->route('admin.investment.locked-in')->with('success', 'Package deleted successfully!');
+    }
+
+    public function customer_investments()
+    {
+        $module_type = 'investment';
+        $investments = CustomerInvestment::paginate();
+        return view('admin-views.investment.customer.investments', compact('module_type', 'investments'));
+    }
+
+    public function investment_withdrawals()
+    {
+        $module_type = 'investment';
+        $withdrawals = InvestmentWithdrawal::paginate();
+        return view('admin-views.investment.withdrawals', compact('module_type', 'withdrawals'));
+    }
+
+    public function withdrawal_pay($id)
+    {
+        $withdrawal = InvestmentWithdrawal::find($id);
+        $withdrawal->paid_at = now();
+        $withdrawal->save();
+
+        return redirect()->route('admin.investment.investment-withdrawals')->with('success', 'Withdrawal paid successfully!');
+    }
+
+    public function customers_wallet_balance()
+    {
+        $module_type = 'investment';
+        $customer_data = User::has('customer_investments')->paginate();
+        return view('admin-views.investment.customer.wallet-balance', compact('module_type', 'customer_data'));
     }
 }

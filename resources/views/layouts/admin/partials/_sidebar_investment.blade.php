@@ -58,30 +58,55 @@
                 <!-- dispatch -->
                 @if (\App\CentralLogics\Helpers::module_permission_check('order'))
                     <!-- Order dispachment -->
-                    <li class="navbar-vertical-aside-has-menu {{ Request::is("admin/investment/*") ? 'active' : '' }}">
-                        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="Investment Packages">
-                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
-                                Packages
-                            </span>
-                        </a>
-                        <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="{{ Request::is('admin/investment*') ? 'display-block' : 'display-none' }}">
+{{--                    <li class="navbar-vertical-aside-has-menu {{ Request::is("admin/investment/*") ? 'active' : '' }}">--}}
+{{--                        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="Investment Packages">--}}
+{{--                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">--}}
+{{--                                Packages--}}
+{{--                            </span>--}}
+{{--                        </a>--}}
+{{--                        <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="{{ Request::is('admin/investment*') ? 'display-block' : 'display-none' }}">--}}
+
+
                             <li class="nav-item {{ Request::is("admin/investment/flexible") ? 'active' : '' }}">
-                                <a class="nav-link " href="{{ route('admin.investment.flexible') }}" title="{{ translate('messages.flexible') }}">
-                                    <span class="tio-circle nav-indicator-icon"></span>
+                                <a class="nav-link " href="{{ route('admin.investment.flexible') }}" title="{{ translate('messages.flexible_packages') }}">
+{{--                                    <span class="tio-circle nav-indicator-icon"></span>--}}
                                     <span class="text-truncate sidebar--badge-container">
-                                        {{translate('messages.flexible')}}
+                                        {{translate('messages.flexible_packages')}}
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item {{ Request::is("admin/investment/locked-in") ? 'active' : '' }}">
-                                <a class="nav-link " href="{{ route('admin.investment.locked-in') }}" title="{{ translate('messages.locked_in') }}">
-                                    <span class="tio-circle nav-indicator-icon"></span>
+                                <a class="nav-link " href="{{ route('admin.investment.locked-in') }}" title="{{ translate('messages.locked_in_packages') }}">
+{{--                                    <span class="tio-circle nav-indicator-icon"></span>--}}
                                     <span class="text-truncate sidebar--badge-container">
-                                        {{translate('messages.locked_in')}}
+                                        {{translate('messages.locked_in_packages')}}
                                     </span>
                                 </a>
                             </li>
-                        </ul>
+
+
+{{--                        </ul>--}}
+{{--                    </li>--}}
+                    <li class="nav-item {{ Request::is("admin/investment/customer-investments") ? 'active' : '' }}">
+                        <a class="nav-link " href="{{ route('admin.investment.customer-investments') }}" title="{{ translate('messages.customer_investments') }}">
+                            <span class="text-truncate sidebar--badge-container">
+                                {{translate('messages.customer_investments')}}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is("admin/investment/customers-wallet-balance") ? 'active' : '' }}">
+                        <a class="nav-link " href="{{ route('admin.investment.customers-wallet-balance') }}" title="{{ translate('messages.customers_wallet_balance') }}">
+                            <span class="text-truncate sidebar--badge-container">
+                                {{translate('messages.customers_wallet_balance')}}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is("admin/investment/investment-withdrawals") ? 'active' : '' }}">
+                        <a class="nav-link " href="{{ route('admin.investment.investment-withdrawals') }}" title="{{ translate('messages.investment_withdrawals') }}">
+                            <span class="text-truncate sidebar--badge-container">
+                                {{translate('messages.investment_withdrawals')}}
+                            </span>
+                        </a>
                     </li>
                 @endif
                 <!-- End dispatch -->

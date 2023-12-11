@@ -37,7 +37,7 @@
                                }'>
                             <thead class="thead-light">
                             <tr class="text-center">
-                                <th class="border-0">{{translate('ID')}}</th>
+                                <th class="border-0">{{translate('SL')}}</th>
                                 <th class="border-0">{{translate('messages.name')}}</th>
                                 <th class="border-0">{{translate('messages.Amount')}}</th>
                                 <th class="border-0">{{translate('messages.Monthly Interest Rate')}}</th>
@@ -52,17 +52,17 @@
                                 <tr>
                                     <td class="text-center">
                                         <span class="mr-3">
-                                            {{$package->id}}
+                                            {{$loop->index+1}}
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="font-size-sm text-body mr-3">
-                                            {{Str::limit($package->name,20,'...')}}
+                                        <span class="text-body mr-3">
+                                            {{Str::limit($package->name,50,'...')}}
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="font-size-sm text-body mr-3">
-                                            {{$package->amount}}
+                                        <span class="text-body mr-3">
+                                            {{\App\CentralLogics\Helpers::format_currency($package->amount)}}
                                         </span>
                                     </td>
                                     <td class="text-center">
@@ -96,7 +96,7 @@
                             <hr>
                         @endif
                         <div class="page-area">
-{{--                            {!! $packages->links() !!}--}}
+                            {!! $packages->links() !!}
                         </div>
                         @if(count($packages) === 0)
                             <div class="empty--data">

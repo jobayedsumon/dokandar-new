@@ -54,6 +54,7 @@ class User extends Authenticatable
         'loyalty_point' => 'integer',
     ];
 
+    protected $appends = ['investment_wallet'];
 
     public function orders()
     {
@@ -73,5 +74,51 @@ class User extends Authenticatable
         $query->when(is_numeric($zone_id), function ($q) use ($zone_id) {
             return $q->where('zone_id', $zone_id);
         });
+    }
+
+    public function customer_investments()
+    {
+        return $this->hasMany(CustomerInvestment::class, 'customer_id');
+    }
+
+    public function investment_withdrawals()
+    {
+        return $this->hasMany(InvestmentWithdrawal::class, 'customer_id');
+    }
+
+    public function total_paid_investment_withdrawals()
+    {
+        return $this->investment_withdrawals()
+            ->where('paid_at', '!=', null)
+            ->sum('withdrawal_amount');
+    }
+
+    public function total_redeemed_investments()
+    {
+        return $this->customer_investments()
+            ->where('redeemed_at', '!=', null)
+            ->withSum('package', 'amount')
+            ->get()
+            ->sum('package_sum_amount');
+    }
+
+    public function total_investments_profit()
+    {
+        return $this->customer_investments()
+            ->get()
+            ->sum('profit_earned');
+    }
+
+    public function getInvestmentWalletAttribute(): object
+    {
+        $profit     = $this->total_investments_profit();
+        $redeemed   = $this->total_redeemed_investments();
+        $withdrawal = $this->total_paid_investment_withdrawals();
+        return (object) [
+            'profit'     => $profit,
+            'redeemed'   => $redeemed,
+            'withdrawal' => $withdrawal,
+            'balance'    => $profit + $redeemed - $withdrawal,
+        ];
     }
 }

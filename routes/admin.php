@@ -637,6 +637,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
                 Route::get('locked-in/edit/{id}', 'InvestmentController@locked_in_package_edit')->name('locked-in.edit');
                 Route::post('locked-in/update/{id}', 'InvestmentController@locked_in_package_update')->name('locked-in.update');
                 Route::delete('locked-in/delete/{id}', 'InvestmentController@locked_in_package_delete')->name('locked-in.delete');
+
+                Route::get('customer-investments', 'InvestmentController@customer_investments')->name('customer-investments');
+                Route::get('investments-withdrawals', 'InvestmentController@investment_withdrawals')->name('investment-withdrawals');
+                Route::post('investments-withdrawal/{id}', 'InvestmentController@withdrawal_pay')->name('withdrawal-pay');
+
+                Route::get('customers-wallet-balance', 'InvestmentController@customers_wallet_balance')->name('customers-wallet-balance');
             });
         });
 

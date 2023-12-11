@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title',translate('messages.locked_in'))
+@section('title',translate('messages.customer_investments'))
 
 @push('css_or_js')
 
@@ -17,11 +17,8 @@
                     <div class="card-header py-2 border-0">
                         <div class="search--button-wrapper">
                             <h5 class="card-title">
-                                {{translate('messages.locked_in')}} {{translate('messages.packages')}}<span class="badge badge-soft-dark ml-2" id="itemCount">{{count($packages)}}</span>
+                                {{translate('messages.customers')}} {{translate('messages.wallet_balance')}}<span class="badge badge-soft-dark ml-2" id="itemCount">{{count($customer_data)}}</span>
                             </h5>
-                            <a href="{{route('admin.investment.locked-in.create')}}" class="btn btn-sm btn-primary px-3" title="{{translate('messages.add')}} {{translate('messages.package')}}"><i class="tio-add-circle"></i>
-                                {{translate('messages.add')}} {{translate('messages.package')}}
-                            </a>
                             <!-- Unfold -->
                             <!-- End Unfold -->
                         </div>
@@ -38,18 +35,17 @@
                             <thead class="thead-light">
                             <tr class="text-center">
                                 <th class="border-0">{{translate('SL')}}</th>
-                                <th class="border-0">{{translate('messages.name')}}</th>
-                                <th class="border-0">{{translate('messages.Amount')}}</th>
-                                <th class="border-0">{{translate('messages.Monthly Interest Rate')}}</th>
-                                <th class="border-0">{{translate('messages.Duration In Months')}}</th>
-                                <th class="border-0">{{translate('messages.Status')}}</th>
-                                <th class="border-0">{{translate('messages.Actions')}}</th>
+                                <th class="border-0">{{translate('messages.Customer Name')}}</th>
+                                <th class="border-0">{{translate('messages.Total Profit Earned')}}</th>
+                                <th class="border-0">{{translate('messages.Total Redeemed Investments')}}</th>
+                                <th class="border-0">{{translate('messages.Total Withdrawal')}}</th>
+                                <th class="border-0">{{translate('messages.Wallet Balance')}}</th>
                             </tr>
 
                             </thead>
 
                             <tbody id="set-rows">
-                            @forelse($packages as $package)
+                            @forelse($customer_data as $data)
                                 <tr>
                                     <td class="text-center">
                                         <span class="mr-3">
@@ -58,53 +54,43 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-body mr-3">
-                                            {{Str::limit($package->name,50,'...')}}
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-body mr-3">
-                                            {{\App\CentralLogics\Helpers::format_currency($package->amount)}}
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-center">
-                                            {{$package->monthly_interest_rate}}%
+                                            {{Str::limit($data->f_name.' '.$data->l_name, 50, '...')}}
+                                            <br>
+                                            {{ $data->phone }}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-center">
-                                            {{$package->duration_in_months}}
+                                            {{\App\CentralLogics\Helpers::format_currency($data->investment_wallet->profit)}}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-center">
-                                            {{$package->status ? 'Active' : 'Inactive'}}
+                                            {{\App\CentralLogics\Helpers::format_currency($data->investment_wallet->redeemed)}}
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <div class="btn--container justify-content-center">
-                                            <a class="btn action-btn btn--primary btn-outline-primary" href="{{route('admin.investment.locked-in.edit',[$package->id])}}" title="{{translate('messages.edit')}}"><i class="tio-edit"></i>
-                                            </a>
-                                            <a class="btn action-btn btn--danger btn-outline-danger" href="javascript:" onclick="form_alert('locked-in-{{$package->id}}','{{ translate('Want to delete this package ?') }}')" title="{{translate('messages.delete')}}"><i class="tio-delete-outlined"></i>
-                                            </a>
-                                            <form action="{{route('admin.investment.locked-in.delete',[$package->id])}}"
-                                                  method="post" id="locked-in-{{$package->id}}">
-                                                @csrf @method('delete')
-                                            </form>
-                                        </div>
+                                        <span class="text-center">
+                                            {{\App\CentralLogics\Helpers::format_currency($data->investment_wallet->withdrawal)}}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="text-center">
+                                            {{\App\CentralLogics\Helpers::format_currency($data->investment_wallet->balance)}}
+                                        </span>
                                     </td>
                                 </tr>
                             @empty
                             @endforelse
                             </tbody>
                         </table>
-                        @if(count($packages) !== 0)
+                        @if(count($customer_data) !== 0)
                             <hr>
                         @endif
                         <div class="page-area">
-                            {!! $packages->links() !!}
+                            {!! $customer_data->links() !!}
                         </div>
-                        @if(count($packages) === 0)
+                        @if(count($customer_data) === 0)
                             <div class="empty--data">
                                 <img src="{{asset('assets/admin/svg/illustrations/sorry.svg')}}" alt="public">
                                 <h5>
