@@ -10,6 +10,8 @@ class CustomerInvestment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $with = ['customer', 'package'];
 
     protected $appends = ['profit_earned'];

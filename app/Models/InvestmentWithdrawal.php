@@ -9,6 +9,8 @@ class InvestmentWithdrawal extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $appends = ['method_details'];
 
     public function customer()

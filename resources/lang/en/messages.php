@@ -2553,4 +2553,7 @@
   'Total Withdrawal' => 'Total Withdrawal',
   'Total Profit Earned' => 'Total Profit Earned',
   'Total Redeemed Investments' => 'Total Redeemed Investments',
+  'withdrawals' => 'Withdrawals',
+  'Profit' => 'Profit',
+  'invested' => 'Invested',
 );

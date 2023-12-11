@@ -28,45 +28,17 @@ class InvestmentController extends Controller
 
         session()->put('dash_params', $params);
 
-        $delivery_man = DeliveryMan::with('last_location')->when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })
-            ->Zonewise()
-            ->limit(2)->get('image');
-
-        $active_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })
-            ->Zonewise()->where('active',1)->count();
-
-        $inactive_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })
-            ->Zonewise()->where('application_status','approved')->where('active',0)->count();
-
-        $unavailable_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })
-            ->Zonewise()->where('active',1)->Unavailable()->count();
-
-        $available_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })
-            ->Zonewise()->where('active',1)->Available()->count();
-
-        $newly_joined_deliveryman = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })
-            ->Zonewise()->whereDate('created_at', '>=', now()->subDays(30)->format('Y-m-d'))->count();
-
-        $deliveryMen = DeliveryMan::when(is_numeric($params['zone_id']), function ($q) use ($params) {
-            return $q->where('zone_id', $params['zone_id']);
-        })->zonewise()->available()->active()->get();
-
-        $deliveryMen = Helpers::deliverymen_list_formatting($deliveryMen);
+        $flexible    = InvestmentPackage::where('type', 'flexible')->count();
+        $locked_in   = InvestmentPackage::where('type', 'locked-in')->count();
+        $investments = CustomerInvestment::count();
+        $withdrawals = InvestmentWithdrawal::count();
+        $customers   = User::whereHas('customer_investments')->count();
+        $invested    = CustomerInvestment::where('redeemed_at', null)->withSum('package', 'amount')->get()->sum('package_sum_amount');
+        $withdrawn   = InvestmentWithdrawal::where('paid_at', '!=', null)->sum('withdrawal_amount');
+        $profit      = CustomerInvestment::get()->sum('profit_earned');
 
         $module_type = 'investment';
-        return view("admin-views.dashboard-{$module_type}", compact('active_deliveryman','deliveryMen','unavailable_deliveryman','available_deliveryman','inactive_deliveryman','newly_joined_deliveryman','delivery_man', 'params','module_type'));
+        return view("admin-views.dashboard-{$module_type}", compact('params','module_type', 'flexible', 'locked_in', 'investments', 'withdrawals', 'customers', 'invested', 'withdrawn', 'profit'));
     }
 
     public function flexible_packages()
@@ -233,7 +205,7 @@ class InvestmentController extends Controller
     public function customers_wallet_balance()
     {
         $module_type = 'investment';
-        $customer_data = User::has('customer_investments')->paginate();
+        $customer_data = User::whereHas('customer_investments')->paginate();
         return view('admin-views.investment.customer.wallet-balance', compact('module_type', 'customer_data'));
     }
 }
